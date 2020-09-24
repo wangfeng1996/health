@@ -1,4 +1,4 @@
-package com.itheima.constant;
+package com.itheima.entity;
 
 import java.io.Serializable;
 import java.util.List;
