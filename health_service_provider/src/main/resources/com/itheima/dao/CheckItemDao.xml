@@ -10,6 +10,7 @@
         values
         (#{code},#{name},#{sex},#{age},#{price},#{type},#{remark},#{attention})
      </insert>
+
     <!--    修改-->
     <update id="update" parameterType="com.itheima.pojo.CheckItem">
     <!--    根据id进行删除-->
@@ -46,8 +47,9 @@
     <delete id="delete" parameterType="int">
         DELETE FROM t_checkitem WHERE id = #{id}
     </delete>
-    <!--    模糊查询-->
-    <select id="selectByCondition" resultType="com.itheima.pojo.CheckItem">
+
+    <!--    模糊查询+ 分页查询-->
+    <select id="selectByCondition" resultType="com.itheima.pojo.CheckItem" parameterType="string">
         select * from t_checkitem where 1=1
         <if test="value != null and value.length > 0">
             AND CONCAT(name,sex,age,remark) LIKE CONCAT('%',#{value},'%')
