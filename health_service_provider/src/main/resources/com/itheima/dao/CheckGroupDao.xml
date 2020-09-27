@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.CheckGroupDao">
+    <!--selectKey 查询自增的id-->
+    <insert id="add" parameterType="com.itheima.pojo.CheckGroup">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_checkgroup(code, name, sex, remark, attention, helpCode)
+        values (#{code}, #{name}, #{sex}, #{remark}, #{attention}, #{helpCode})
+    </insert>
+
+    <!--    根据groupId插入 多个itemId-->
+    <insert id="groupIntoCheckItemIds" parameterType="int">
+        insert into t_checkgroup_checkitem(checkgroup_id, checkitem_id)
+        values (#{groupId}, #{checkItemId})
+    </insert>
+
+    <!--    查询所有的+模糊查询-->
+    <select id="findByCondition" parameterType="string" resultType="com.itheima.pojo.CheckGroup">
+        select *
+        from t_checkgroup where 1 = 1
+        <if test="value != null and value != '' and value.length > 0">
+            AND CONCAT(name, code, sex, helpCode, remark) LIKE CONCAT('%', #{value}, '%')
+        </if>
+    </select>
+
+    <!--    根据id查询数据-->
+
+    <select id="findById" resultType="com.itheima.pojo.CheckGroup" parameterType="int">
+        select *
+        from t_checkgroup
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--查询所有的数据-->
+    <select id="findAll" resultType="com.itheima.pojo.CheckGroup">
+        select *
+        from t_checkgroup
+    </select>
+
+    <!--    根据检查组的id查询与之绑定的检查项的id的集合-->
+    <select id="checkGroupIdWithCheckItemIds" resultType="java.lang.Integer" parameterType="int">
+        select checkitem_id
+        from t_checkgroup_checkitem
+        where checkgroup_id = #{id}
+    </select>
+
+
+    <!--修改数据，使用的是动态sql-->
+    <update id="edit" parameterType="com.itheima.pojo.CheckGroup">
+        update t_checkgroup
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="helpCode != null">
+                helpCode = #{helpCode},
+            </if>
+            <if test="attention != null">
+                attention = #{attention},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <!--根据检查组的id删除该条记录-->
+    <delete id="deleteCheckGroupId" parameterType="int">
+        delete
+        from t_checkgroup
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+
+    <!--根据检查组的id 删除中间表的检查项的集合-->
+    <delete id="deleteCheckItemIds" parameterType="int">
+        delete
+        from t_checkgroup_checkitem
+        where checkgroup_id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <!--  查询检查组是否绑定检查套餐-->
+    <select id="findSetMealId" resultType="long">
+        select count(setmeal_id)
+        from t_setmeal_checkgroup
+        where checkgroup_id = #{id,jdbcType=INTEGER}
+    </select>
+</mapper>
