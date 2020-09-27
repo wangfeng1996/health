@@ -39,6 +39,11 @@ public class CheckItemController {
         return new Result(true, MessageConstant.ADD_CHECKITEM_SUCCESS);
     }
 
+    /**
+     * 分页+模糊查询
+     * @param queryPageBean
+     * @return
+     */
     //http://localhost:82/checkitem/findPage.do
     @PostMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
@@ -47,6 +52,13 @@ public class CheckItemController {
         String queryString = queryPageBean.getQueryString();
         return checkItemService.pageQuery(currentPage, pageSize, queryString);
     }
+
+
+    /**
+     * 删除数据
+     * @param id
+     * @return
+     */
 
     //    http://localhost:82/checkitem/delete/108.do
     @DeleteMapping("/delete/{id}")
@@ -62,6 +74,11 @@ public class CheckItemController {
         return new Result(true, MessageConstant.DELETE_CHECKITEM_SUCCESS);
     }
 
+    /**
+     * 修改数据
+     * @param checkItem
+     * @return
+     */
     //http://localhost:82/checkitem/update.d
     @PutMapping("/update")
     public Result update(@RequestBody CheckItem checkItem) {
@@ -76,6 +93,12 @@ public class CheckItemController {
         return new Result(true, MessageConstant.EDIT_CHECKITEM_SUCCESS);
     }
 
+
+    /**
+     * 根据id进行查询数据
+     * @param id
+     * @return
+     */
     //http://localhost:82/checkitem/findById/108.do
     @GetMapping("/findById/{id}")
     public Result findById(@PathVariable Integer id) {
@@ -92,6 +115,11 @@ public class CheckItemController {
         }
     }
 
+
+    /**
+     * 查询所有的数据
+     * @return
+     */
     //http://localhost:82/checkitem/findAll.do
     @GetMapping("/findAll")
     public Result findAll() {
