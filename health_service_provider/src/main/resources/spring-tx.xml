@@ -23,6 +23,5 @@
               需要进行事务控制，会由Spring框架产生代理对象，
               Dubbo需要将Service发布为服务，要求必须使用cglib创建代理对象。
     -->
-    <tx:annotation-driven transaction-manager="transactionManager"
-                          proxy-target-class="true"/>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 </beans>

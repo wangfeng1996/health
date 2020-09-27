@@ -16,7 +16,13 @@
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
-      <configuration />
+      <configuration>
+        <fileset id="fileset" name="Spring Service" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/spring-service.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring-dao.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring-tx.xml</file>
+        </fileset>
+      </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
@@ -111,5 +117,6 @@
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:5.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-taglibs:5.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-acl:5.0.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.25.Final" level="project" />
   </component>
 </module>

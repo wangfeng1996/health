@@ -14,8 +14,7 @@
         <module>health_backend</module>
     </modules>
     <packaging>pom</packaging>
-
-
+    <!-- 集中定义依赖版本号 -->
     <properties>
         <junit.version>4.12</junit.version>
         <spring.version>5.0.5.RELEASE</spring.version>
@@ -34,6 +33,9 @@
         <poi.version>3.14</poi.version>
         <jedis.version>2.9.0</jedis.version>
         <quartz.version>2.2.1</quartz.version>
+        <lombok.version>1.18.12</lombok.version>
+        <netty.version>4.1.25.Final</netty.version>
+        <!--        <curator.version>2.8.0</curator.version>-->
     </properties>
     <!-- 依赖管理标签  必须加 -->
     <dependencyManagement>
@@ -100,6 +102,7 @@
                 <artifactId>zkclient</artifactId>
                 <version>${zkclient.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -232,6 +235,32 @@
                 <artifactId>xml-apis</artifactId>
                 <version>1.4.01</version>
             </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!--            <dependency>-->
+            <!--                <groupId>org.apache.curator</groupId>-->
+            <!--                <artifactId>curator-framework</artifactId>-->
+            <!--                <version>${curator.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.apache.curator</groupId>-->
+            <!--                <artifactId>curator-recipes</artifactId>-->
+            <!--                <version>${curator.version}</version>-->
+            <!--            </dependency>-->
+
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
     <dependencies>
