@@ -1,7 +1,6 @@
 package com.itheima.service.impl;
 
 
-
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -17,6 +16,7 @@ import java.util.List;
 
 /**
  * @author wangfeng
+ * 检查项的业务层
  */
 @Service(interfaceClass = CheckItemService.class)
 @Transactional
@@ -24,11 +24,13 @@ public class CheckItemServiceImpl implements CheckItemService {
     @Autowired
     private CheckItemDao checkItemDao;
 
+    //添加
     @Override
     public void add(CheckItem checkItem) {
         checkItemDao.add(checkItem);
     }
 
+    //  分页查询
     @Override
     public PageResult pageQuery(Integer currentPage, Integer pageSiz, String queryString) {
         PageHelper.startPage(currentPage, pageSiz);
@@ -37,6 +39,7 @@ public class CheckItemServiceImpl implements CheckItemService {
         return new PageResult(page.getTotal(), page.getResult());
     }
 
+    //删除
     @Override
     public void delete(Integer id) throws RuntimeException {
         long countId = checkItemDao.findCountId(id);
@@ -47,17 +50,21 @@ public class CheckItemServiceImpl implements CheckItemService {
         }
     }
 
+    //更新
     @Override
     public void update(CheckItem checkItem) {
         checkItemDao.update(checkItem);
     }
 
+
+    // 根据id进行查询
     @Override
     public CheckItem findById(Integer id) {
         System.out.println(checkItemDao.findById(id).toString());
         return checkItemDao.findById(id);
     }
 
+    // 查询所有
     @Override
     public List<CheckItem> findAll() {
         return checkItemDao.findAll();
