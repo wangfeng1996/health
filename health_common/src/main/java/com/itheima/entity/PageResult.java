@@ -5,10 +5,16 @@ import java.util.List;
 
 /**
  * 分页结果封装对象
+ * @author wangfeng
  */
+
 public class PageResult implements Serializable{
-    private Long total;//总记录数
-    private List rows;//当前页结果
+    /**
+     * total 总记录数
+     * rows 当前页结果
+     */
+    private Long total;
+    private List rows;
     public PageResult(Long total, List rows) {
         super();
         this.total = total;
