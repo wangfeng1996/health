@@ -25,7 +25,7 @@ public interface CheckGroupDao {
      */
 
 
-    public Page<CheckGroup> findByCondition(String queryString);
+    public Page<CheckGroup> findByCondition(@Param("value") String queryString);
 
     /**
      * 查询所有
