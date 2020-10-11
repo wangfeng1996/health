@@ -32,4 +32,5 @@ public class PageResult implements Serializable{
     public void setRows(List rows) {
         this.rows = rows;
     }
+
 }

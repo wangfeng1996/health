@@ -1,7 +1,7 @@
 package com.itheima.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.itheima.CheckGroupService;
+import com.itheima.service.CheckGroupService;
 import com.itheima.constant.MessageConstant;
 import com.itheima.entity.CheckGroupAndCheckItemIds;
 import com.itheima.entity.PageResult;
@@ -34,6 +34,7 @@ public class CheckGroupController {
 
     @PostMapping("/add")
     public Result add(@RequestBody CheckGroupAndCheckItemIds checkGroupAndCheckItemIds) {
+        System.out.println("hello");
 
         boolean addFlag = checkGroupService.add(checkGroupAndCheckItemIds);
         if (addFlag) {
@@ -41,6 +42,7 @@ public class CheckGroupController {
         } else {
             return new Result(false, MessageConstant.ADD_CHECKGROUP_FAIL);
         }
+
     }
 
     /**
@@ -76,7 +78,6 @@ public class CheckGroupController {
 
     /**
      * 根据id进行查询数据
-     *
      * @param id
      * @return
      */

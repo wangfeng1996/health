@@ -17,7 +17,7 @@
 							http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!--数据源-->
-    <context:property-placeholder location="classpath*:database.properties"/>
+    <context:property-placeholder location="classpath*:*.properties"/>
     <bean id="dataSource"
           class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <property name="username" value="${jdbc.username}"/>

@@ -4,7 +4,7 @@ package com.itheima.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.itheima.CheckItemService;
+import com.itheima.service.CheckItemService;
 import com.itheima.entity.PageResult;
 import com.itheima.pojo.CheckItem;
 import com.itheima.dao.CheckItemDao;
@@ -21,6 +21,7 @@ import java.util.List;
 @Service(interfaceClass = CheckItemService.class)
 @Transactional
 public class CheckItemServiceImpl implements CheckItemService {
+
     @Autowired
     private CheckItemDao checkItemDao;
 

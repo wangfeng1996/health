@@ -1,4 +1,4 @@
-package com.itheima;
+package com.itheima.service;
 
 import com.itheima.entity.PageResult;
 import com.itheima.pojo.CheckItem;

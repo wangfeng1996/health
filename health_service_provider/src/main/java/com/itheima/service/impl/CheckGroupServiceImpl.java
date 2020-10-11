@@ -3,7 +3,7 @@ package com.itheima.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.itheima.CheckGroupService;
+import com.itheima.service.CheckGroupService;
 import com.itheima.dao.CheckGroupDao;
 import com.itheima.entity.CheckGroupAndCheckItemIds;
 import com.itheima.entity.PageResult;
@@ -11,8 +11,6 @@ import com.itheima.pojo.CheckGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -62,7 +60,6 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     public PageResult pageQuery(Integer currentPage, Integer pageSiz, String queryString) {
         PageHelper.startPage(currentPage, pageSiz);
         Page<CheckGroup> page = checkGroupDao.findByCondition(queryString);
-        System.out.println(page.toString());
         return new PageResult(page.getTotal(), page.getResult());
     }
 
@@ -74,7 +71,6 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     @Override
     public List<CheckGroup> finAll() {
         List<CheckGroup> all = checkGroupDao.findAll();
-        System.out.println(all);
         return all;
     }
 
@@ -111,19 +107,14 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     public void edit(CheckGroupAndCheckItemIds checkGroupAndCheckItemIds) {
 //        获取id
         Integer groupId = checkGroupAndCheckItemIds.getCheckGroup().getId();
-        System.out.println(groupId);
 //        删除检查项
         checkGroupDao.deleteCheckItemIds(groupId);
-
         CheckGroup checkGroup = checkGroupAndCheckItemIds.getCheckGroup();
-        System.out.println(checkGroup.toString());
 //      修改检查组
         checkGroupDao.edit(checkGroup);
 //        获取id
         Integer gid = checkGroup.getId();
-
         Integer[] checkItemIds = checkGroupAndCheckItemIds.getCheckitemIds();
-        System.out.println(Arrays.toString(checkItemIds));
 //        添加中间表
         for (Integer cid : checkItemIds) {
             checkGroupDao.groupIntoCheckItemIds(gid, cid);
@@ -138,12 +129,10 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     @Override
     public void delete(Integer id) {
         long setMealId = checkGroupDao.findSetMealId(id);
-        System.out.println(setMealId);
         if (setMealId > 0) {
             throw new RuntimeException("当前检查项被引用，不能删除");
         } else {
             checkGroupDao.deleteCheckGroupId(id);
-
         }
     }
 }

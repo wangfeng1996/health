@@ -3,12 +3,14 @@ package com.itheima.dao;
 import com.github.pagehelper.Page;
 import com.itheima.pojo.CheckItem;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author wangfeng
  */
+@Repository
 public interface CheckItemDao {
     /**
      * 添加
@@ -61,6 +63,13 @@ public interface CheckItemDao {
      */
 
     public List<CheckItem> findAll();
+
+    /**
+     * 根据id(中间表查询的id)查询检查项的所有的信息
+     * @param id
+     * @return
+     */
+    public List<CheckItem> findCheckItemById(int id);
 
 
 }

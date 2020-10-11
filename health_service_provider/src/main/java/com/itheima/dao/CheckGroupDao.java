@@ -3,12 +3,15 @@ package com.itheima.dao;
 import com.github.pagehelper.Page;
 import com.itheima.pojo.CheckGroup;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author wangfeng
  */
+
+@Repository
 public interface CheckGroupDao {
     /**
      * 添加
@@ -80,10 +83,8 @@ public interface CheckGroupDao {
 
     /**
      * 根据Groupid删除检查项的id
-     *
      * @param id
      */
-
     public void deleteCheckItemIds(Integer id);
 
 
@@ -95,5 +96,11 @@ public interface CheckGroupDao {
      */
     public long findSetMealId(Integer id);
 
-
+    /**
+     * 根据id查询检查组的详细信息
+     *
+     * @param id
+     * @return
+     */
+    public List<CheckGroup> findCheckGroupById(int id);
 }
