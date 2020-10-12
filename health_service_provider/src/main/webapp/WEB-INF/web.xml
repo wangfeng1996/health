@@ -4,11 +4,13 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <!--    加载spring监听器，用于监听spring上下文-->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <context-param>
         <param-name>contextConfigLocation</param-name>
+        <!--        加载有关spring的核心配置文件信息-->
         <param-value>classpath*:spring*.xml</param-value>
     </context-param>
 
