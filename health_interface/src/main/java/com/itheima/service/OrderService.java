@@ -8,6 +8,6 @@ import java.util.Map;
  * @author wangfeng
  */
 public interface OrderService {
-    Result order(Map map);
-
+    public Result order(Map map) throws Exception;
+    public Map findById(Integer id) throws Exception;
 }

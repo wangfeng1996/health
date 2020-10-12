@@ -21,6 +21,7 @@
     <!--批量扫描，发布服务-->
     <dubbo:annotation package="com.itheima.service"/>
 
+    <!--静态页面的配置文件信息-->
     <bean id="freemarkerConfig"
           class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer"> <!--指定模板文件所在目录-->
         <property name="templateLoaderPath" value="/WEB-INF/ftl/"/>

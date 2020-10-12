@@ -40,16 +40,10 @@ public class OrderController {
          * telephone       17834422993,
          * orderDate      2020-10-10
          */
-        System.out.println(map);
 //       获取手机号码，根据手机号码
         String telephone = (String) map.get("telephone");
-
-        System.out.println(telephone);
 //        根据获取的手机号码,获取redis中的验证码
         String code = jedisPool.getResource().get(telephone + RedisMessageConstant.SENDTYPE_ORDER);
-
-        System.out.println(code);
-
 //        获取前端传过来的验证码
         String validateCode = (String) map.get("validateCode");
 
@@ -66,20 +60,32 @@ public class OrderController {
                 e.printStackTrace();
                 return result;
             }
-
-            if (result.isFlag()) {
-//                如果预约成功，发送短信给用户
-                //预约成功，可以为用户发送短信
-                try {
-                    SMSUtils.sendShortMessage(SMSUtils.ORDER_NOTICE, telephone, (String) map.get("orderDate"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+//            if (result.isFlag()) {
+////                如果预约成功，发送短信给用户
+//                //预约成功，可以为用户发送短信
+//                try {
+////                    SMSUtils.sendShortMessage(SMSUtils.ORDER_NOTICE, telephone, (String) map.get("orderDate"));
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
 //            验证码正确并且预约成功了
             return result;
         } else {
+//            验证码验证失败
             return new Result(false, MessageConstant.VALIDATECODE_ERROR);
+        }
+    }
+
+    //根据预约ID查询预约相关信息
+    @RequestMapping("/findById")
+    public Result findById(Integer id) {
+        try {
+            Map map = orderService.findById(id);
+            return new Result(true, MessageConstant.QUERY_ORDER_SUCCESS, map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.QUERY_ORDER_FAIL);
         }
     }
 

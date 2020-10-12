@@ -56,4 +56,30 @@ public class ValidateCodeController {
             return new Result(false, MessageConstant.SEND_VALIDATECODE_FAIL);
         }
     }
+
+
+
+    @RequestMapping("/send4Login")
+    public Result Send4Login(String telephone) {
+
+//随机生成4位验证码数据
+        Integer code1= ValidateCodeUtils.generateValidateCode(6);
+        System.out.println(code1);
+//      给用户进行发送验证码
+        /**
+         * 第一个参数是:模板信息
+         * 第二个参数是:传入的手机号码
+         * 第三个参数是:验证码 --将int类型的数据转化成String类型的数据
+         */
+        try {
+            // 向阿里云发送验证
+//            SMSUtils.sendShortMessage(SMSUtils.VALIDATE_CODE, telephone, code.toString());
+            // 将验证码放入到jedis进行保存,key是电话号码+预约的路径，seconds是验证码的有效时间，最后的验证码
+            jedisPool.getResource().setex(telephone + RedisMessageConstant.SENDTYPE_LOGIN, 300, code1.toString());
+            return new Result(true, MessageConstant.SEND_VALIDATECODE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.SEND_VALIDATECODE_FAIL);
+        }
+    }
 }
