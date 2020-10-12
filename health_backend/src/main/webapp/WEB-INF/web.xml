@@ -23,10 +23,13 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+
+
+
     <servlet>
         <servlet-name>springmvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <!-- 指定加载的配置文件 ，通过参数contextConfigLocation加载 -->
+        <!-- 指定加载的配置文件 ，通过参数contextConfigLocation加载 架子啊springmvc的核心配置文件信息-->
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:springmvc.xml</param-value>
