@@ -18,8 +18,7 @@
         <collection property="checkItems"
                     ofType="com.itheima.pojo.CheckItem"
                     column="id"
-                    select="com.itheima.dao.CheckItemDao.findCheckItemById"
-        >
+                    select="com.itheima.dao.CheckItemDao.findCheckItemById">
         </collection>
     </resultMap>
 

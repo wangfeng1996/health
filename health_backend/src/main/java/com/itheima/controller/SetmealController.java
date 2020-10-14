@@ -19,6 +19,9 @@ import redis.clients.jedis.JedisPool;
 
 import java.util.UUID;
 
+/**
+ * @author wangfeng
+ */
 @RestController
 @RequestMapping("/setmeal")
 public class SetmealController {
@@ -64,6 +67,7 @@ public class SetmealController {
     public Result upload(@RequestParam("imgFile") MultipartFile imgFile) {
         //原始文件名
         String originalFilename = imgFile.getOriginalFilename();
+        System.out.println(originalFilename);
 
         int index = originalFilename.lastIndexOf(".");
         String suffix = originalFilename.substring(index);
