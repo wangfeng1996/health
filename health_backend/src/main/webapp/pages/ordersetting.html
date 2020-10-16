@@ -62,6 +62,20 @@
                             <span @click="pickNext(currentYear,currentMonth)">❯</span>
                         </div>
                         <div class="clearfix"></div>
+<!--                        &lt;!&ndash;                        &ndash;&gt;-->
+                        <!--                        <div class="block">-->
+                        <!--                            <el-date-picker-->
+                        <!--                                    v-model="value2"-->
+                        <!--                                    type="daterange"-->
+                        <!--                                    align="right"-->
+                        <!--                                    unlink-panels-->
+                        <!--                                    range-separator="至"-->
+                        <!--                                    start-placeholder="startDay"-->
+                        <!--                                    end-placeholder="endDay">-->
+                        <!--                            </el-date-picker>-->
+                        <!--                            <el-button type="primary" @click="clickBtn(value2)">打印选择的时间</el-button>-->
+                        <!--                        </div>-->
+                        <!--                        &lt;!&ndash;                        &ndash;&gt;-->
                     </div>
                     <!-- 星期 -->
                     <div class="caldate">
@@ -110,7 +124,6 @@
                                                     class="orderbtn">设置
                                             </button>
                                         </template>
-
                                     </div>
                                 </template>
                             </li>
@@ -137,7 +150,8 @@
             currentYear: 1970,
             currentWeek: 1,
             days: [],
-            leftobj: []//用于装载页面显示的月份已经进行预约设置的数据
+            leftobj: [],//用于装载页面显示的月份已经进行预约设置的数据
+            value2: '',
         },
         created: function () {//在vue初始化时调用
             this.initData(null);
@@ -174,6 +188,19 @@
                     });
                 });
             },
+            // clickBtn(value2) {
+            //     let v2 = value2.toLocaleString();
+            //     let vd = v2.split(",");
+            //     let d1 = vd[0];
+            //     let d2 = vd[1];
+            //     let dd1 = d1.split(" ")[d1.split(" ").length - 2];
+            //     let dd2 = d2.split(" ")[d2.split(" ").length - 2];
+            //     let mm = [
+            //         {"startDay1": dd1},
+            //         {"endDay01": dd2}
+            //     ]
+            //     axios.post("/ordersetting/meData.do", value2);
+            // },
             //上传之前进行文件格式校验
             beforeUpload(file) {
                 let name = file.name;
@@ -264,7 +291,7 @@
                 ];*/
 
                 //发送ajax请求，根据当前页面对应的月份查询数据库，封装成相应结果赋值给leftobj模型数据，用于页面展示
-                axios.post("/ordersetting/getOrderSettingByMonth.do?date=" + this.currentYear + "-" + this.currentMonth).then((res) => {
+                axios.post("/ordersetting/getOrderSettingByMonth.do?date=" + this.currentDay + "-" + this.currentMonth).then((res) => {
                     if (res.data.flag) {
                         this.leftobj = res.data.data;
                     } else {
@@ -301,6 +328,7 @@
                 if (d < 10) d = "0" + d;
                 return y + "-" + m + "-" + d
             }
+
         }
     })
 </script>

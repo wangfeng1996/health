@@ -1,5 +1,8 @@
 package com.itheima.utils;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+import freemarker.template.utility.DateUtil;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -239,6 +242,7 @@ public class DateUtils {
         c.set(Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek() + 6);
         return c.getTime();
     }
+
     //获得上周一的日期
     public static Date geLastWeekMonday(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -274,23 +278,52 @@ public class DateUtils {
     }
 
     //获得今天日期
-    public static Date getToday(){
+    public static Date getToday() {
         return new Date();
     }
 
     //获得本月一日的日期
-    public static Date getFirstDay4ThisMonth(){
+    public static Date getFirstDay4ThisMonth() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH,1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
         return calendar.getTime();
     }
 
+    //    获取本月最后一日的日期
+    public static Date getLastDay4ThisMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return cal.getTime();
+    }
+
+
+//
+//    public static void main(String[] args) {
+//        try {
+//            System.out.println("本周一" + parseDate2String(getThisWeekMonday()));
+//            System.out.println("本月一日" + parseDate2String(getFirstDay4ThisMonth()));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     public static void main(String[] args) {
         try {
-            System.out.println("本周一" + parseDate2String(getThisWeekMonday()));
-            System.out.println("本月一日" + parseDate2String(getFirstDay4ThisMonth()));
+            Date dayOfWeek1 = DateUtils.getFirstDayOfWeek(new Date());
+
+            String FistWeekDay = DateUtils.parseDate2String(dayOfWeek1);
+
+            //            获取本周最后天日期,
+            Date dayOfWeek2 = DateUtils.getLastDayOfWeek(new Date());
+            String LastWeekDay = DateUtils.parseDate2String(dayOfWeek2);
+
+            System.out.println(FistWeekDay);
+            System.out.println(LastWeekDay);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 }

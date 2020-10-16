@@ -6,12 +6,11 @@ import com.itheima.constant.MessageConstant;
 import com.itheima.entity.Result;
 import com.itheima.pojo.OrderSetting;
 import com.itheima.service.OrderSettingService;
+import com.itheima.utils.DateUtils;
 import com.itheima.utils.POIUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.tools.jconsole.inspector.XObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +23,6 @@ import java.util.Map;
 public class OrderSettingController {
     @Reference
     private OrderSettingService orderSettingService;
-
 
 
     @RequestMapping("/upload")
@@ -76,7 +74,22 @@ public class OrderSettingController {
             return new Result(false, MessageConstant.GET_ORDERSETTING_FAIL);
 
         }
-
-
     }
+
+//    @RequestMapping("/meData")
+//    public Result meData(@RequestBody List<Object> list) {
+//        for (Object o : list) {
+//            try {
+//                Date date = DateUtils.parseString2Date(o.toString(), "yyyy-MM-dd");
+//                System.out.println(DateUtils.parseDate2String(date));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//        return null;
+//
+//    }
+
+
 }

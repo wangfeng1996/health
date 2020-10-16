@@ -113,4 +113,13 @@
         select count(id)
         from t_member
     </select>
+
+    <!--    根据时间段查询会员的总数-->
+
+    <select id="findMemberCountByDates" resultType="java.lang.Integer">
+        select count(t_member.id)
+        from t_member
+        where regTime
+                      between #{FirstOfDay,jdbcType=VARCHAR} and #{lastOfDay,jdbcType=VARCHAR};
+    </select>
 </mapper>

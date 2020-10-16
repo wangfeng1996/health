@@ -92,4 +92,15 @@ public interface MemberDao {
      * @return
      */
     public Integer findMemberTotalCount();
+
+    /**
+     * 根据时间段查询会员的总数
+     *
+     * @param FirstOfDay
+     * @param lastOfDay
+     * @return
+     */
+    public Integer findMemberCountByDates(@Param("FirstOfDay") String FirstOfDay, @Param("lastOfDay") String lastOfDay);
+
+
 }

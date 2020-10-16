@@ -23,7 +23,6 @@ public class UserController {
             String username = user.getUsername();
             return new Result(true, MessageConstant.GET_USERNAME_SUCCESS,username);
         }
-
         return new Result(false, MessageConstant.GET_USERNAME_FAIL);
     }
 }

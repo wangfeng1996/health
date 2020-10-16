@@ -50,9 +50,18 @@ public interface SetmealDao {
 
     /**
      * 根据id查询检查套餐的信息
+     *
      * @param id
      * @return
      */
     public Setmeal findId(int id);
+
+    /**
+     * 查询每项预约套餐的总数
+     *
+     * @return
+     */
+
+    public List<Map<String, Object>> findSetmealCount();
 
 }

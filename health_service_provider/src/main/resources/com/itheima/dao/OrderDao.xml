@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.itheima.dao.OrderDao" >
+<mapper namespace="com.itheima.dao.OrderDao">
     <resultMap id="baseResultMap" type="com.itheima.pojo.Order">
         <id column="id" property="id"/>
         <result column="member_id" property="memberId"/>
@@ -15,13 +15,14 @@
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into t_order(member_id,orderDate,orderType,orderStatus,setmeal_id)
-        values (#{memberId},#{orderDate},#{orderType},#{orderStatus},#{setmealId})
+        insert into t_order(member_id, orderDate, orderType, orderStatus, setmeal_id)
+        values (#{memberId}, #{orderDate}, #{orderType}, #{orderStatus}, #{setmealId})
     </insert>
 
     <!--动态条件查询-->
     <select id="findByCondition" parameterType="com.itheima.pojo.Order" resultMap="baseResultMap">
-        select * from t_order
+        select *
+        from t_order
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -46,39 +47,76 @@
 
     <!--根据预约id查询预约信息，包括体检人信息、套餐信息-->
     <select id="findById4Detail" parameterType="int" resultType="map">
-        select m.name member ,s.name setmeal,o.orderDate orderDate,o.orderType orderType
-        from
-          t_order o,
-          t_member m,
-          t_setmeal s
-        where o.member_id=m.id and o.setmeal_id=s.id and o.id=#{id}
+        select m.name member, s.name setmeal, o.orderDate orderDate, o.orderType orderType
+        from t_order o,
+             t_member m,
+             t_setmeal s
+        where o.member_id = m.id
+          and o.setmeal_id = s.id
+          and o.id = #{id}
     </select>
 
     <!--根据日期统计预约数-->
     <select id="findOrderCountByDate" parameterType="string" resultType="int">
-        select count(id) from t_order where orderDate = #{value}
+        select count(id)
+        from t_order
+        where orderDate = #{value}
     </select>
 
     <!--根据日期统计预约数，统计指定日期之后的预约数-->
     <select id="findOrderCountAfterDate" parameterType="string" resultType="int">
-        select count(id) from t_order where orderDate &gt;= #{value}
+        select count(id)
+        from t_order
+        where orderDate &gt;= #{value}
     </select>
 
     <!--根据日期统计到诊数-->
     <select id="findVisitsCountByDate" parameterType="string" resultType="int">
-        select count(id) from t_order where orderDate = #{value} and orderStatus = '已到诊'
+        select count(id)
+        from t_order
+        where orderDate = #{value}
+          and orderStatus = '已到诊'
     </select>
 
     <!--根据日期统计到诊数，统计指定日期之后的到诊数-->
     <select id="findVisitsCountAfterDate" parameterType="string" resultType="int">
-        select count(id) from t_order where orderDate &gt;= #{value} and orderStatus = '已到诊'
+        select count(id)
+        from t_order
+        where orderDate &gt;= #{value}
+          and orderStatus = '已到诊'
     </select>
 
     <!--热门套餐，查询前5条-->
     <select id="findHotSetmeal" resultType="map">
-        select s.name, count(o.id) setmeal_count ,count(o.id)/(select count(id) from t_order) proportion
-          from t_order o inner join t_setmeal s on s.id = o.setmeal_id
-          group by o.setmeal_id
-          order by setmeal_count desc limit 0,4
+        select s.name, count(o.id) setmeal_count, count(o.id) / (select count(id) from t_order) proportion
+        from t_order o
+                     inner join t_setmeal s on s.id = o.setmeal_id
+        group by o.setmeal_id
+        order by setmeal_count desc
+        limit 0,4
+
+        <!--左外连接-->
+
+        <!--                select count(o1.setmeal_id) as value, ts.name as name, count(o1.setmeal_id) / (SELECT count(t_order.id) from t_order) p-->
+        <!--                from t_order o1-->
+        <!--                             left join t_setmeal ts on o1.setmeal_id = ts.id-->
+        <!--                group by name-->
+        <!--                order by value desc-->
+        <!--                limit 0,4-->
+    </select>
+
+
+    <select id="findThisWeekOrderNumber" resultType="java.lang.Integer" parameterType="string">
+        select count(id)
+        from t_order
+        where orderDate between #{FistDay,jdbcType=VARCHAR} and #{LastDay,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="findThisWeekVisitsOrderNumber" resultType="java.lang.Integer" parameterType="string">
+        select count(id)
+        from t_order
+        where orderDate between #{FistDay,jdbcType=VARCHAR} and #{LastDay,jdbcType=VARCHAR}
+          and orderStatus = '已到诊'
     </select>
 </mapper>

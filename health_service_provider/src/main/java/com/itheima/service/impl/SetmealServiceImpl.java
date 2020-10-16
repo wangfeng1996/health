@@ -105,6 +105,11 @@ public class SetmealServiceImpl implements SetmealService {
         return setmealDao.findId(id);
     }
 
+    @Override
+    public List<Map<String, Object>> findSetmealCount() {
+        return setmealDao.findSetmealCount();
+    }
+
     /**
      * 设置套餐和检查组多对多关联关系
      *
@@ -165,7 +170,6 @@ public class SetmealServiceImpl implements SetmealService {
     public void generateHtml(String templateName, String htmlPageName, Map map) {
 //  获得配置对象
         Configuration configuration = freeMarkerConfigurer.getConfiguration();
-
         try {
             //        获取模板对象
             Template template = configuration.getTemplate(templateName);
