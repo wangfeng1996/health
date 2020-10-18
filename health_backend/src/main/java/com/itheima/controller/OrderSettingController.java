@@ -76,20 +76,5 @@ public class OrderSettingController {
         }
     }
 
-//    @RequestMapping("/meData")
-//    public Result meData(@RequestBody List<Object> list) {
-//        for (Object o : list) {
-//            try {
-//                Date date = DateUtils.parseString2Date(o.toString(), "yyyy-MM-dd");
-//                System.out.println(DateUtils.parseDate2String(date));
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-//        return null;
-//
-//    }
-
 
 }

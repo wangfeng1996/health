@@ -9,7 +9,7 @@ import java.util.*;
  * 菜单
  */
 @Data
-public class Menu implements Serializable{
+public class Menu implements Serializable {
     private Integer id;
     private String name; // 菜单名称
     private String linkUrl; // 访问路径
@@ -20,4 +20,6 @@ public class Menu implements Serializable{
     private Set<Role> roles = new HashSet<Role>(0);//角色集合
     private List<Menu> children = new ArrayList<>();//子菜单集合
     private Integer parentMenuId;//父菜单id
+    private Integer level;
+    private String parentName;
 }

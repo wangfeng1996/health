@@ -62,19 +62,19 @@
                             <span @click="pickNext(currentYear,currentMonth)">❯</span>
                         </div>
                         <div class="clearfix"></div>
-<!--                        &lt;!&ndash;                        &ndash;&gt;-->
-                        <!--                        <div class="block">-->
-                        <!--                            <el-date-picker-->
-                        <!--                                    v-model="value2"-->
-                        <!--                                    type="daterange"-->
-                        <!--                                    align="right"-->
-                        <!--                                    unlink-panels-->
-                        <!--                                    range-separator="至"-->
-                        <!--                                    start-placeholder="startDay"-->
-                        <!--                                    end-placeholder="endDay">-->
-                        <!--                            </el-date-picker>-->
-                        <!--                            <el-button type="primary" @click="clickBtn(value2)">打印选择的时间</el-button>-->
-                        <!--                        </div>-->
+                        <!--                        -->
+                                                <div class="block">
+                                                    <el-date-picker
+                                                            v-model="value2"
+                                                            type="daterange"
+                                                            align="right"
+                                                            unlink-panels
+                                                            range-separator="至"
+                                                            start-placeholder="startDay"
+                                                            end-placeholder="endDay">
+                                                    </el-date-picker>
+                                                    <el-button type="primary" @click="clickBtn(value2)">打印选择的时间</el-button>
+                                                </div>
                         <!--                        &lt;!&ndash;                        &ndash;&gt;-->
                     </div>
                     <!-- 星期 -->
@@ -188,19 +188,19 @@
                     });
                 });
             },
-            // clickBtn(value2) {
-            //     let v2 = value2.toLocaleString();
-            //     let vd = v2.split(",");
-            //     let d1 = vd[0];
-            //     let d2 = vd[1];
-            //     let dd1 = d1.split(" ")[d1.split(" ").length - 2];
-            //     let dd2 = d2.split(" ")[d2.split(" ").length - 2];
-            //     let mm = [
-            //         {"startDay1": dd1},
-            //         {"endDay01": dd2}
-            //     ]
-            //     axios.post("/ordersetting/meData.do", value2);
-            // },
+            clickBtn(value2) {
+                let v2 = value2.toLocaleString();
+                let vd = v2.split(",");
+                let d1 = vd[0];
+                let d2 = vd[1];
+                let dd1 = d1.split(" ")[d1.split(" ").length - 2];
+                let dd2 = d2.split(" ")[d2.split(" ").length - 2];
+                let mm = [
+                    {"startDay1": dd1},
+                    {"endDay01": dd2}
+                ]
+                axios.post("/ordersetting/meData.do", value2);
+            },
             //上传之前进行文件格式校验
             beforeUpload(file) {
                 let name = file.name;

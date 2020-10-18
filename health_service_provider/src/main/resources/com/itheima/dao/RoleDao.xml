@@ -5,7 +5,54 @@
     <!--根据用户ID查询关联的角色-->
     <select id="findByUserId" parameterType="int" resultType="com.itheima.pojo.Role">
         select r.*
-          from t_role r,t_user_role ur
-          where r.id = ur.role_id and ur.user_id = #{user_id}
+        from t_role r,
+             t_user_role ur
+        where r.id = ur.role_id
+          and ur.user_id = #{user_id}
     </select>
+
+    <select id="selectByCondition" resultType="com.itheima.pojo.Role" parameterType="string">
+        select *
+        from t_role where 1 = 1
+        <if test="queryString != null and queryString.length > 0">
+            AND CONCAT(name, description, keyword) LIKE CONCAT('%', #{queryString}, '%')
+        </if>
+    </select>
+    <!--添加角色信息-->
+    <insert id="add" parameterType="com.itheima.pojo.Role">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_role(name, keyword, description)
+        values (#{name}, #{keyword}, #{description})
+    </insert>
+
+    <delete id="deleteRoleIdAndMenuId" parameterType="int">
+        delete
+        from t_role_menu
+        where role_id = #{roleId,jdbcType=INTEGER}
+    </delete>
+    <!--在中间表中进行根据Roleid进行插入的操作-->
+    <insert id="insertRoIdAndMenuId" parameterType="int">
+        insert into t_role_menu(role_id, menu_id)
+        VALUES (#{roleId,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER})
+    </insert>
+
+    <!--删除role和permissions的中间表信息-->
+    <delete id="deleteRoleIdAndPermissionId" parameterType="int">
+        delete
+        from t_role_permission
+        where role_id = #{roleId,jdbcType=INTEGER}
+    </delete>
+    <!--在中间表中进行根据Roleid进行插入的操作-->
+    <insert id="insertRoIdAndPermissionId" parameterType="int">
+        insert into t_role_permission(role_id, permission_id)
+        VALUES (#{roleId,jdbcType=INTEGER}, #{permissionId,jdbcType=INTEGER})
+    </insert>
+
+    <delete id="deleteRole" parameterType="int">
+        delete
+        from t_role
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
 </mapper>
