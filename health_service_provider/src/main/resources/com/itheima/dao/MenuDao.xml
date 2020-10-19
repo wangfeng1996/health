@@ -109,4 +109,12 @@
         from t_menu
         where parentMenuId = #{id,jdbcType=INTEGER}
     </select>
+
+    <select id="findMenuIdsByRoleId" resultType="java.lang.Integer">
+        select menu_id
+        from t_role_menu
+        where role_id = #{id,jdbcType=INTEGER}
+    </select>
+
+
 </mapper>

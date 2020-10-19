@@ -2,12 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itheima.dao.UserDao">
-
-
-
-
     <select id="findByUsername" parameterType="string" resultType="com.itheima.pojo.User">
-        select * from t_user where username = #{username}
+        select *
+        from t_user
+        where username = #{username}
     </select>
 
+    <select id="findUserNameId" resultType="java.lang.Integer">
+        select id
+        from t_user
+        where username = #{name,jdbcType=VARCHAR}
+    </select>
 </mapper>

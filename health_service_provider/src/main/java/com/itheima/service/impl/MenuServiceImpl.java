@@ -6,9 +6,12 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.itheima.dao.CheckItemDao;
 import com.itheima.dao.MenuDao;
+import com.itheima.dao.RoleDao;
+import com.itheima.dao.UserDao;
 import com.itheima.entity.PageResult;
 import com.itheima.pojo.CheckItem;
 import com.itheima.pojo.Menu;
+import com.itheima.pojo.Role;
 import com.itheima.service.CheckItemService;
 import com.itheima.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,10 @@ public class MenuServiceImpl implements MenuService {
 
     @Autowired
     private MenuDao menuDao;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private RoleDao roleDao;
 
 
     @Override
@@ -143,5 +150,36 @@ public class MenuServiceImpl implements MenuService {
         return arrayList;
     }
 
+    @Override
+    public List<Map<String, Object>> findMenuLists(String username) {
+        ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
+//        根据用户名查询用户id
+        Integer userNameId = userDao.findUserNameId(username);
+//        根据用户id 查询角色ids
+        List<Integer> roleIds = roleDao.findRoleIds(userNameId);
+//        遍历roleId，获取到每个roleid
+        for (Integer roleId : roleIds) {
+//            根据roleId,获取菜单所有的菜单id
+            List<Integer> menuIds = menuDao.findMenuIdsByRoleId(roleId);
+            for (Integer menuId : menuIds) {
+//                获取所有的父级菜单
+                List<Integer> parentIds = menuDao.selectParentId();
+                for (Integer parentId : parentIds) {
+                    if (menuId.equals(parentId)) {
+                        HashMap<String, Object> hashMap = new HashMap<>();
+//                根据id，获取菜单信息
+                        Menu menu = menuDao.findById(menuId);
+                        hashMap.put("path", menu.getPath());
+                        hashMap.put("name", menu.getName());
+                        hashMap.put("icon", menu.getIcon());
+                        List<Menu> children = menuDao.findChildren(menuId);
+                        hashMap.put("children", children);
+                        arrayList.add(hashMap);
 
+                    }
+                }
+            }
+        }
+        return arrayList;
+    }
 }

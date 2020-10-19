@@ -89,9 +89,13 @@ public interface MenuDao {
 
     /**
      * 根据id查询所有的子菜单的集合
+     *
      * @param id
      * @return
      */
     public List<Menu> findChildren(@Param("id") Integer id);
+
+    public List<Integer> findMenuIdsByRoleId(Integer id);
+
 
 }

@@ -73,4 +73,6 @@ public interface MenuService {
      * @return
      */
     public List<Map<String, Object>> findMenuList();
+
+    public List<Map<String, Object>> findMenuLists(String name);
 }

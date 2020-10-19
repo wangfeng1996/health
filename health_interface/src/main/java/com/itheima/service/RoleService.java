@@ -26,4 +26,5 @@ public interface RoleService {
     public List<Integer> findPermissionById(Integer id);
 
     public void edit(Map<String, Object> map);
+
 }

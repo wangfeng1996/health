@@ -1,6 +1,7 @@
 package com.itheima.dao;
 
 import com.itheima.pojo.User;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author wangfeng
@@ -14,5 +15,7 @@ public interface UserDao {
      * @param username
      * @return
      */
-    public User findByUsername(String username);
+    public User findByUsername(@Param("username") String username);
+
+    public Integer findUserNameId(@Param("name") String name);
 }

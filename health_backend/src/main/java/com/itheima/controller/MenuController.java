@@ -166,4 +166,10 @@ public class MenuController {
     }
 
 
+    //  查询菜单，并将菜单的数据返回
+    @RequestMapping("/findMenuLists")
+    public Result findMenuLists(String userName) {
+        List<Map<String, Object>> menuLists = menuService.findMenuLists(userName);
+        return new Result(true, "success", menuLists);
+    }
 }

@@ -82,6 +82,7 @@ public interface RoleDao {
 
     /**
      * 根据RoleId 查询权限的ids
+     *
      * @param id
      * @return
      */
@@ -89,7 +90,17 @@ public interface RoleDao {
 
     /**
      * 修改角色
+     *
      * @param role
      */
     public void edit(Role role);
+
+    /**
+     *
+     */
+
+    public List<Integer> findRoleIds(Integer userId);
+
+
+
 }

@@ -90,4 +90,10 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="findRoleIds" resultType="java.lang.Integer">
+        select role_id
+        from t_user_role
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
 </mapper>
