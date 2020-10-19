@@ -27,7 +27,7 @@ public class CheckItemController {
     private CheckItemService checkItemService;
 
     //http://localhost:82/checkitem/add.do
-    @PreAuthorize("hasAuthority('CHECKITEM_ADD')")//权限校验
+
     @PostMapping("/add")
     public Result add(@RequestBody CheckItem checkItem) {
         try {
@@ -48,7 +48,7 @@ public class CheckItemController {
      * @return
      */
     //http://localhost:82/checkitem/findPage.do
-    @PreAuthorize("hasAuthority('CHECKITEM_QUERY')")//权限校验
+
     @PostMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         Integer currentPage = queryPageBean.getCurrentPage();
@@ -66,7 +66,7 @@ public class CheckItemController {
      */
 
     //    http://localhost:82/checkitem/delete/108.do
-    @PreAuthorize("hasAuthority('CHECKITEM_DELETE')")//权限校验
+
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
         try {
@@ -87,7 +87,7 @@ public class CheckItemController {
      * @return
      */
     //http://localhost:82/checkitem/update.d
-    @PreAuthorize("hasAuthority('CHECKITEM_EDIT')")//权限校验
+
     @PutMapping("/update")
     public Result update(@RequestBody CheckItem checkItem) {
         try {

@@ -86,6 +86,49 @@ public class RoleServiceImpl implements RoleService {
         }
     }
 
+    @Override
+    public Role findRoleById(Integer id) {
+        Role roleById = roleDao.findRoleById(id);
+        return roleById;
+    }
+
+    @Override
+    public List<Integer> findMenuById(Integer id) {
+        List<Integer> menuIds = roleDao.findMenuIdsByRoleId(id);
+        return menuIds;
+    }
+
+    @Override
+    public List<Integer> findPermissionById(Integer id) {
+        List<Integer> permissionIds = roleDao.findPermissionIdsByRoleId(id);
+        return permissionIds;
+    }
+
+    @Override
+    public void edit(Map<String, Object> map) {
+        //        获取角色信息
+        Map<String, Object> roleList = (Map<String, Object>) map.get("roleList");
+
+        Object id = roleList.get("id");
+        //获取角色名称
+        String name = (String) roleList.get("name");
+        //        获取角色关键字
+        String keyword = (String) roleList.get("keyword");
+        //        获取描述信息
+        String description = (String) roleList.get("description");
+        Role role = new Role();
+        role.setId((Integer) id);
+        role.setName(name);
+        role.setKeyword(keyword);
+        role.setDescription(description);
+        roleDao.edit(role);
+//        添加菜单中间表
+        addMenuIds(map, (Integer) id);
+//        添加权限中间表
+        addPermissionIds(map, (Integer) id);
+    }
+
+
     /**
      * 根据角色id删除菜单id
      *

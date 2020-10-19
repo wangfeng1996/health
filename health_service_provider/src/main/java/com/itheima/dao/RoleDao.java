@@ -3,7 +3,9 @@ package com.itheima.dao;
 import com.github.pagehelper.Page;
 import com.itheima.pojo.Role;
 import org.apache.ibatis.annotations.Param;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
+import java.util.List;
 import java.util.Set;
 
 public interface RoleDao {
@@ -61,4 +63,33 @@ public interface RoleDao {
      * @return
      */
     public boolean deleteRole(@Param("id") Integer id);
+
+    /**
+     * 根据id查询角色信息
+     *
+     * @param id
+     * @return
+     */
+    public Role findRoleById(@Param("roleId") Integer id);
+
+    /**
+     * 根据RoleId 查询 菜单的的ids
+     *
+     * @param id
+     * @return
+     */
+    public List<Integer> findMenuIdsByRoleId(@Param("id") Integer id);
+
+    /**
+     * 根据RoleId 查询权限的ids
+     * @param id
+     * @return
+     */
+    public List<Integer> findPermissionIdsByRoleId(@Param("id") Integer id);
+
+    /**
+     * 修改角色
+     * @param role
+     */
+    public void edit(Role role);
 }

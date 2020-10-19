@@ -55,4 +55,39 @@
         from t_role
         where id = #{id,jdbcType=INTEGER}
     </delete>
+
+    <select id="findRoleById" resultType="com.itheima.pojo.Role" parameterType="int">
+        select *
+        from t_role
+        where id = #{roleId,jdbcType=INTEGER}
+    </select>
+
+    <select id="findMenuIdsByRoleId" resultType="java.lang.Integer" parameterType="int">
+        select menu_id
+        from t_role_menu
+        where role_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findPermissionIdsByRoleId" resultType="java.lang.Integer" parameterType="int">
+        select permission_id
+        from t_role_permission
+        where role_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--修改数据，使用的是动态sql-->
+    <update id="edit" parameterType="com.itheima.pojo.Role">
+        update t_role
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="keyword != null">
+                keyword = #{keyword},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

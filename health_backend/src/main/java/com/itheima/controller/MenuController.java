@@ -41,9 +41,9 @@ public class MenuController {
         } catch (Exception e) {
             e.printStackTrace();
 //            添加失败传给前端的响应
-            return new Result(false, "添加菜单成功");
+            return new Result(false, "添加菜单失败");
         }
-        return new Result(true, "添加菜单失败");
+        return new Result(true, "添加菜单成功");
     }
 
     /**

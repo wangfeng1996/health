@@ -157,9 +157,9 @@
                         <el-button type="primary" @click="handleAdd()">确定</el-button>
                     </div>
                 </el-dialog>
-
+                <!-- 编辑标签弹层 -->
                 <div class="add-form">
-                    <el-dialog title="新增角色" :visible.sync="dialogFormVisible4Edit">
+                    <el-dialog title="编辑角色" :visible.sync="dialogFormVisible4Edit">
                         <template>
                             <el-tabs v-model="activeName" type="card">
                                 <el-tab-pane label="基本信息" name="first">
@@ -220,7 +220,7 @@
                                                     show-checkbox
                                                     node-key="id"
                                                     ref="tree"
-                                                    highlight-current
+                                                    :default-checked-keys="defaultKey"
                                                     :props="defaultProps">
                                             </el-tree>
                                         </table>
@@ -263,7 +263,8 @@
             defaultProps: {
                 children: 'children',
                 label: 'name'
-            }
+            },
+            defaultKey: []
 
         },
         created() {
@@ -272,14 +273,15 @@
         methods: {
             //编辑
             handleEdit() {
-
                 var param = {
-                    checkGroup: this.formData,
-                    checkitemIds: this.checkitemIds
-                }
-                //发送ajax请求，将修改后的表单数据（检查组基本信息、勾选的检查项）提交到后台进行处理
-                axios.post("/checkgroup/edit.do", param).then((res) => {
-                    //关闭编辑窗口
+                    roleList: this.formData,
+                    permissionIds: this.permissionIds,
+                    menuIds: this.$refs.tree.getCheckedKeys()
+                };
+                //alert(this.checkitemIds);
+                //发送ajax请求，将表单数据提交到后台进行处理
+                axios.post("/role/edit.do", param).then((res) => {
+                    //关闭新增窗口
                     this.dialogFormVisible4Edit = false;
                     if (res.data.flag) {
                         //操作成功
@@ -292,6 +294,7 @@
                         this.$message.error(res.data.message);
                     }
                 }).finally(() => {
+                    //重新进行分页查询
                     this.findPage();
                 });
             },
@@ -354,41 +357,24 @@
                 this.permissionList();
                 //获取树形结构所有的数据
                 this.menuList();
+                this.defaultKey = [];
+                this.permissionIds = [];
             },
             // 弹出编辑窗口
             handleUpdate(row) {
+                //菜单列表
+                this.menuList();
+                //权限列表
+                this.permissionList();
                 //弹出编辑窗口
                 this.dialogFormVisible4Edit = true;
                 this.activeName = 'first';
-                //发送ajax请求，根据检查组ID查询当前检查组数据，用于基本信息的回显
-                axios.get("/role/findById/" + row.id + ".do").then((res) => {
-                    if (res.data.flag) {
-                        //查询到数据
-                        this.formData = res.data.data;
-                    } else {
-                        //查询数据失败
-                        this.$message.error(res.data.message);
-                    }
-                });
-                //发送ajax请求，查询所有的检查项数据，用于展示检查项列表
-                axios.get("/role/findAll.do").then((res) => {
-                    if (res.data.flag) {
-                        //查询检查项数据成功
-                        this.tableData = res.data.data;
-                        //发送ajax请求，根据检查组ID查询当前检查组包含的检查项ID，用于页面复选框回显
-                        axios.get("/checkgroup/checkGroupIdWithCheckItemIds/" + row.id + ".do").then((res) => {
-                            if (res.data.flag) {
-                                this.checkitemIds = res.data.data;
-                            } else {
-                                this.$message.error(res.data.message);
-                            }
-                        });
-                    } else {
-                        //查询检查项数据失败
-                        this.$message.error(res.data.message);
-                    }
-                });
-
+                //根据id查询role的信息
+                this.findRoleById(row.id);
+                //根据id查询菜单的信息的id
+                this.menuListIds(row.id);
+                // 根据id查询权限的id
+                this.permissionListIds(row.id);
             },
             //切换页码
             handleCurrentChange(currentPage) {
@@ -402,7 +388,7 @@
                 this.$confirm("确认删除吗？", "提示", {type: 'warning'}).then(() => {
                     //点击确定按钮时只需此处代码
                     // alert('用户点击的是确定按钮');
-                    axios.post("/role/delete.do?id="+row.id).then((res) => {
+                    axios.post("/role/delete.do?id=" + row.id).then((res) => {
                         if (!res.data.flag) {
                             //删除失败
                             this.$message.error(res.data.message);
@@ -442,6 +428,46 @@
                         this.$message.error(res.data.message);
                     }
                 })
+            },
+            menuListIds(id) {
+                //    菜单所有的id
+                // this.defaultKey: [1, 4, 9, 5]
+
+                axios.get("/role/findMenuById.do?id=" + id).then((res) => {
+                    if (res.data.flag) {
+                        //查询到数据
+                        this.defaultKey = res.data.data;
+                        console.log(this.formData);
+                    } else {
+                        //查询数据失败
+                        this.$message.error(res.data.message);
+                    }
+                });
+
+            },
+            permissionListIds(id) {
+                axios.get("/role/findPermissionById.do?id=" + id).then((res) => {
+                    if (res.data.flag) {
+                        //查询到数据
+                        this.permissionIds = res.data.data;
+                        console.log(this.formData);
+                    } else {
+                        //查询数据失败
+                        this.$message.error(res.data.message);
+                    }
+                });
+            },
+            findRoleById(id) {
+                axios.get("/role/findRoleById.do?id=" + id).then((res) => {
+                    if (res.data.flag) {
+                        //查询到数据
+                        this.formData = res.data.data;
+                        console.log(this.formData);
+                    } else {
+                        //查询数据失败
+                        this.$message.error(res.data.message);
+                    }
+                });
             }
         }
     })
